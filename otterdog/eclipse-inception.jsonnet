@@ -122,4 +122,9 @@ orgs.newOrg('technology.inception', 'eclipse-inception') {
       ],
     },
   ],
+} + {
+  # snippet added due to 'https://github.com/eclipsefdn/otterdog-configs/blob/main/blueprints/add-dot-github-repo.yml'
+  _repositories+:: [
+    orgs.newRepo('.github')
+  ],
 }
