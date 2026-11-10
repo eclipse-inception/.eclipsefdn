@@ -28,11 +28,18 @@ orgs.newOrg('technology.inception', 'eclipse-inception') {
       has_wiki: false,
       homepage: "https://eclipse-inception.github.io/",
       web_commit_signoff_required: false,
-      branch_protection_rules: [
-        orgs.newBranchProtectionRule('main') {
-          required_approving_review_count: 0,
-          requires_status_checks: false,
-          requires_strict_status_checks: true,
+      rulesets: [
+        orgs.newRepoRuleset('Main branch protection') {
+          bypass_actors+: [
+            "@eclipse-inception/technology-inception-project-leads"
+          ],
+          include_refs+: [
+            "~DEFAULT_BRANCH"
+          ],
+          required_pull_request+: {
+            required_approving_review_count: 0,
+          },
+          required_status_checks: null,
         },
       ],
       environments: [
@@ -63,6 +70,14 @@ orgs.newOrg('technology.inception', 'eclipse-inception') {
         "uima"
       ],
       web_commit_signoff_required: false,
+      secrets: [
+        orgs.newRepoSecret('UKP_MAVEN_TOKEN') {
+          value: "********",
+        },
+        orgs.newRepoSecret('UKP_MAVEN_USER') {
+          value: "********",
+        },
+      ],
       workflows+: {
         allow_action_patterns+: [
           "mikepenz/action-junit-report@*",
